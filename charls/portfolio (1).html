@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" type="text/css" href="portfolio/portfolio.css">
+</head>
+<body>
+    <!--Name: Charls Kenneth C. Repelente
+        C/Y/S: BSIT Y2-2
+        Date: 1/30/2026
+        -->
+<header>
+            <h1 id = "name">Charls Kenneth C. Repelente</h1> 
+     <img src = "images/formal picture.jpg" alt = "Photo of Charls Kenneth C. Repelente" width = "150">
+     <p><strong>Email:</strong><a href = "mailto:ccrepelente0107qc@student.fatima.edu.ph"> ccrepelente0107qc@student.fatima.edu.ph </a>| Phone: 09942834328</p>
+     <p><strong>Facebook:</strong><a href = "https://www.facebook.com/@rly.kenn">rly.kenn</a></p>
+     <p><strong>Address:</strong> Don Antonio, Quezon City</p>
+</header>
+<!-- Navigational menu-->
+ <nav>
+    <ul>
+        <li><a href ="resume.html">resume</a></li>
+        <li><a href ="personal (1).html">portfolio</a></li>
+        <li><a href ="#contact">Contact</a></li>
+
+    </ul>
+ </nav>
+<h2 class = "section-title">Portfolio</h2>
+<!--My Calculator-->
+<h3>MY CALCULATOR</h3>
+<img src ="calculator (1)/calculator (1).png" alt ="photo of calculator" width ="450">
+<p>TRY MY CALCULATOR</p>
+<ul>
+<li><a href = "calcu (1).html">TRY ME!</a></li>
+</ul>
+<!--My Cat-->
+<h3>MY CAT</h3>
+<img src ="images/cat.jpg" alt ="photo of my cat" width ="450">
+<p>This is my cat and she questioning you if she is joke to you</p>
+<ul>
+<li><a href = "images/cat.jpg">My Cat</a></li>
+</ul>
+
+<section>
+<h3>Contact Me</h3>
+<p>If you have any questions or project inquiries, feel free to send me a message.</p>
+<form action="#">
+<fieldset>
+            <legend>Get in Touch</legend>
+        <!-- Full Name-->
+    <form action="submit.php" method="POST">
+        <label for>Full Name:<br><input type="text" name="full_name" /></label><br />
+    </form>
+        <label for>Email Address:<br><input type="email" name="email_address" /></label><br />
+        <label for>Phone Number:<br><input type="tel" name="phone_number" /></label><br />
+        <label for="message">Your Message:<br></label>
+        <textarea id="message" name="message" rows="4" required></textarea><br />
+        <label for>Inquiry Type:<br></label> 
+        <select name="Inquiry">
+            <option value="general-inquiry">General Inquiry</option>
+            <option value="project-proposal">Project Proposal</option>
+            <option value="collaboration">Collaboration</option><br />
+        </select>
+            <br>
+            <button type="submit" class="submit">Send Message</button><br>
+            <button type="Reset" class="reset">Clear Form</button>      
+</fieldset>
+</form>
+</section>
+</body>
+</html>

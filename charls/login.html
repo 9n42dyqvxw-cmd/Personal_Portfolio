@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Login Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* Added a subtle gradient background for better aesthetics */
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        /* --- THE FLOW: Fade & Slide Up Animation --- */
+        @keyframes slideUpFade {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            /* Applying the animation */
+            animation: slideUpFade 0.6s ease-out forwards;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease; /* Smooth flow on focus */
+            background-color: #fafbfe;
+        }
+
+        /* Input Focus Flow */
+        .input-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+
+        .input-group input:focus + label,
+        .input-group:focus-within label {
+            color: #007bff;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .options a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .options a:hover {
+            color: #0056b3;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Button Hover Flow */
+        .login-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Message Box for JS feedback */
+        #message-box {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Welcome Back</h2>
+        
+        <div id="message-box"></div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox" name="remember"> Remember me
+                </label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn" id="submitBtn">Log In</button>
+        </form>
+
+        <div class="signup-link">
+            Don't have an account? <a href="#">Sign up</a>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const messageBox = document.getElementById('message-box');
+
+        loginForm.addEventListener('submit', function(e) {
+            // Prevent the page from refreshing immediately
+            e.preventDefault();
+
+            // 1. Change button state to simulate processing
+            submitBtn.textContent = 'Logging in...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.disabled = true;
+
+            // 2. Simulate a network delay (e.g., checking database) using setTimeout
+            setTimeout(() => {
+                // Hide the form visually to show "flow" to the next step
+                loginForm.style.display = 'none';
+                
+                // Show success message
+                messageBox.textContent = 'Login Successful! Redirecting...';
+                messageBox.className = 'success';
+                messageBox.style.display = 'block';
+
+                // Reset button just in case
+                submitBtn.textContent = 'Log In';
+                submitBtn.style.opacity = '1';
+                submitBtn.disabled = false;
+
+            }, 1500); // 1.5 seconds delay
+        });
+    </script>
+
+</body>
+</html>

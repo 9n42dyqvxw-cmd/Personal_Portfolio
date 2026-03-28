@@ -1,0 +1,813 @@
+/* Global Styles & Dark Color Palette */
+:root {
+    --bg-color: #0B1120;     
+    --primary: #1E3A8A;      
+    --secondary: #334155;    
+    --accent: #3B82F6;       
+    --text-main: #E2E8F0;
+    
+    /* NEW: Premium Google Fonts */
+    --font-tech: 'Space Mono', monospace;
+    --font-body: 'Inter', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; 
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    /* Apply Inter to the general body text for clean readability */
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-x: hidden; 
+}
+
+/* Apply the Technical Font to Headings, Logos, and Buttons */
+h1, h2, h3, .logo, nav ul li a, .btn, .marquee-group, .skill-item, .project-card p {
+    font-family: var(--font-tech);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+/* Navigation */
+/* Navigation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    position: fixed;
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(11, 17, 32, 0.85); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--text-main);
+    z-index: 100;
+    
+    /* DALAWANG ANIMATION PARA SA NAVBAR:
+       1. navSlideDown: Bababa siya sa simula (1 second)
+       2. navContinuousGlow: Walang tigil na pag-ilaw sa ilalim (mag-uumpisa after 1 sec)
+    */
+    transform: translateY(-100%);
+    animation: 
+        navSlideDown 1s cubic-bezier(0.25, 1, 0.5, 1) forwards,
+        navContinuousGlow 3s ease-in-out 1s infinite alternate;
+}
+
+/* 1. Ang Drop-down Entrance (Mananatili ito) */
+@keyframes navSlideDown {
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* 2. ITO ANG BAGONG CONTINUOUS ANIMATION PARA SA NAVBAR */
+@keyframes navContinuousGlow {
+    0% {
+        /* Normal na anino at mahinang asul na linya sa ilalim */
+        box-shadow: 0 4px 20px rgba(0,0,0,0.5), 
+                    0 1px 2px rgba(59, 130, 246, 0.2);
+    }
+    100% {
+        /* Lalakas at kikislap ang neon blue glow sa ilalim ng buong navbar */
+        box-shadow: 0 4px 30px rgba(0,0,0,0.8), 
+                    0 3px 15px rgba(59, 130, 246, 0.7),
+                    0 0 30px rgba(59, 130, 246, 0.4);
+    }
+}
+
+/* (Ang logo at mga menu links sa ibaba nito ay mananatiling pareho, 
+   dahil may continuous 'logoPulse' na tayo para sa BLACKSMITH text!) */
+
+.logo {
+    font-weight: bold;
+    font-size: 1.5rem; /* Pinalaki nang kaunti */
+    text-transform: uppercase;
+    color: var(--accent);
+    letter-spacing: 2px;
+    
+    /* 2. PULSING GLOW ANIMATION PARA SA LOGO */
+    animation: logoPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes logoPulse {
+    0% {
+        text-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 15px rgba(59, 130, 246, 0.9), 
+                     0 0 30px rgba(59, 130, 246, 0.6);
+    }
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 35px; /* Dinagdagan ang space */
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    position: relative;
+    padding: 5px 0;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* 3. HIGH-TECH HOVER EFFECTS SA MGA LINKS */
+nav ul li a:hover {
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.8); /* Iilaw din ang text */
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    /* Magsisimula ang linya sa gitna */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--accent);
+    /* Glowing border sa linya */
+    box-shadow: 0 0 8px var(--accent);
+    transition: width 0.3s ease-out;
+}
+
+nav ul li a:hover::after {
+    width: 100%; /* Hahaba mula gitna papuntang dulo */
+}
+
+/* 1. Hero Section */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    color: var(--text-main);
+    background-color: var(--bg-color);
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    opacity: 0.15; 
+    object-fit: cover;
+}
+
+/* DITO NATIN INAYOS: Ginawang flex column para bumaba ang button */
+.hero-content {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* HOVER EFFECT LOGIC PARA SA PANGALAN AT PICTURE */
+.name-hover-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Update mo itong hero h1 block */
+.hero h1 {
+    font-size: 4.5rem;
+    text-transform: uppercase;
+    margin-bottom: 40px; 
+    line-height: 1.2;
+    cursor: default; 
+    transition: color 0.3s ease;
+    
+    /* PINAGSAMA NATIN ANG DALAWANG ANIMATION */
+    /* 1. cinematicReveal: Tatakbo ng 1.5s sa simula */
+    /* 2. techFloat: Tatakbo nang walang katapusan (infinite) pagkatapos ng 1.5s delay */
+    animation: 
+        cinematicReveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards,
+        techFloat 4s ease-in-out 1.5s infinite alternate;
+}
+
+/* (Panatilihin mo itong cinematicReveal na ginawa natin kanina) */
+@keyframes cinematicReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+        letter-spacing: 20px; 
+        filter: blur(15px);   
+        text-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 5px;  
+        filter: blur(0);      
+        text-shadow: 2px 4px 10px rgba(0,0,0,0.8);
+    }
+}
+
+/* ITO ANG MAS PINALAKAS NA CONTINUOUS ANIMATION */
+@keyframes techFloat {
+    0% {
+        transform: translateY(0);
+        /* Base shadow at mahinang ilaw */
+        text-shadow: 2px 4px 10px rgba(0,0,0,0.9), 
+                     0 0 10px rgba(59, 130, 246, 0.3);
+    }
+    100% {
+        transform: translateY(-15px); /* Mas mataas at mas pansinin na pag-angat */
+        
+        /* MULTIPLE LAYERS OF GLOW: Mas maliwanag, mas malaki, at mas intense na blue glow */
+        text-shadow: 2px 15px 20px rgba(0,0,0,0.8), 
+                     0 0 20px rgba(59, 130, 246, 0.9), 
+                     0 0 40px rgba(59, 130, 246, 0.7),
+                     0 0 60px rgba(59, 130, 246, 0.5),
+                     0 0 80px rgba(59, 130, 246, 0.3); 
+    }
+}
+
+.name-hover-container:hover h1 {
+    color: var(--accent); 
+}
+
+/* Ang base styling ng iyong picture */
+.hover-profile-pic {
+    position: absolute;
+    top: 50%;
+    left: 110%; 
+    transform: translateY(-50%) translateX(-20px);
+    width: 250px; 
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    border: 3px solid var(--accent);
+    opacity: 0;
+    visibility: hidden;
+    /* Inayos natin ang transition para smooth itong mawawala kapag inalis ang cursor */
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    pointer-events: none; 
+    z-index: 10;
+}
+
+/* Kapag itinutok ang cursor sa pangalan mo */
+.name-hover-container:hover .hover-profile-pic {
+    opacity: 1;
+    visibility: visible;
+    /* Dalawang animation: Isa para sa pag-slide papasok, isa para sa pag-float/glow */
+    animation: 
+        picSlideIn 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards,
+        picFloatGlow 3s ease-in-out 0.5s infinite alternate;
+}
+
+/* 1. Animation para sa pag-slide papasok */
+@keyframes picSlideIn {
+    0% {
+        transform: translateY(-50%) translateX(-20px);
+    }
+    100% {
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+/* 2. Continuous Animation para sa pag-float at pag-glow (Hologram Effect) */
+@keyframes picFloatGlow {
+    0% {
+        transform: translateY(-50%) translateX(0);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8), 
+                    0 0 10px rgba(59, 130, 246, 0.4);
+        border-color: var(--accent);
+    }
+    100% {
+        /* Aangat din ang picture gaya ng text */
+        transform: translateY(-55%) translateX(0); 
+        /* Liliwanag nang husto ang likod at ang border nito */
+        box-shadow: 0 20px 40px rgba(0,0,0,0.9), 
+                    0 0 30px rgba(59, 130, 246, 0.8), 
+                    0 0 60px rgba(59, 130, 246, 0.5);
+        border-color: #93C5FD; /* Lighter blue highlight sa border */
+    }
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 35px;
+    background-color: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    cursor: pointer;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+}
+
+.btn:hover {
+    background-color: var(--accent);
+    color: var(--bg-color); 
+    transform: translateY(-3px); 
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); 
+}
+
+/* 2. Text Marquee */
+.marquee-container {
+    width: 100%;
+    background-color: var(--accent); 
+    color: var(--bg-color); 
+    padding: 20px 0;
+    overflow: hidden;
+    display: flex;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 20s linear infinite;
+}
+
+.marquee-group {
+    display: flex;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* 3. About Section */
+.about-section {
+    padding: 120px 50px;
+    text-align: center;
+    background-color: var(--primary); 
+    color: var(--text-main);
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 49px,
+        rgba(226, 232, 240, 0.05) 49px,
+        rgba(226, 232, 240, 0.05) 50px
+    );
+}
+
+.about-content p {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    line-height: 1.8;
+    font-size: 1.2rem;
+    background-color: rgba(11, 17, 32, 0.7); 
+    backdrop-filter: blur(5px);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(59, 130, 246, 0.2); 
+}
+
+/* 4. Skills Section */
+.skills-section {
+    padding: 120px 50px;
+    text-align: center;
+    background-color: var(--secondary); 
+    color: var(--text-main);
+}
+
+.skills-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.skill-item {
+    border: 2px solid rgba(59, 130, 246, 0.4); 
+    padding: 25px 40px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: var(--text-main);
+    background-color: var(--bg-color); 
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.skill-item:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+
+/* 5. Projects Section */
+.projects-section {
+    padding: 120px 0;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+}
+
+.projects-section h2 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.project-marquee {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    padding: 20px 0 40px 0; 
+}
+
+.project-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 30s linear infinite;
+}
+
+.project-track:hover {
+    animation-play-state: paused;
+}
+
+.project-group {
+    display: flex;
+    gap: 30px;
+    padding-right: 30px; 
+}
+
+.project-card {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    background-color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    border: 1px solid var(--primary);
+}
+
+.project-card:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    z-index: 10;
+    border-color: var(--accent);
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, rgba(11, 17, 32, 0.95) 0%, rgba(11, 17, 32, 0) 100%);
+    z-index: 1;
+}
+
+.project-card p {
+    position: relative;
+    z-index: 2;
+    color: var(--text-main);
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    transform: translateY(10px);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover p {
+    color: var(--accent);
+    transform: translateY(0);
+}
+
+/* Reusable Keyframe */
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
+
+/* 6. Contact & Footer - HIGH-TECH ENHANCEMENT */
+/* Siguraduhing ang footer-content ay nakasentro ang lahat ng nasa loob */
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+}
+
+/* Ayusin ang spacing ng Connect Section para sakto sa gitna */
+.connect-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Piliting isentro ang text at icons */
+    justify-content: center;
+    z-index: 2; 
+    margin-top: 20px;
+}
+
+.connect-section p {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    color: var(--text-main);
+    margin-bottom: 25px;
+    font-weight: 400;
+    text-align: center; /* Siguraduhing pantay ang text */
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.tech-footer {
+    position: relative;
+    padding: 80px 50px 40px 50px;
+    background-color: var(--bg-color); /* Ginawang sobrang dark para mag-blend sa projects */
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    overflow: hidden;
+}
+
+/* Umiilaw na linya sa itaas ng footer (Power Line Effect) */
+.tech-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    box-shadow: 0 0 15px var(--accent), 0 0 5px var(--accent);
+}
+
+.footer-logo {
+    font-family: var(--font-tech);
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--text-main);
+    letter-spacing: 8px;
+    opacity: 0.15; /* Nakatago nang kaunti na parang watermark */
+    transition: all 0.4s ease;
+    cursor: default;
+    text-align: center;
+}
+
+.footer-logo:hover {
+    opacity: 1;
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent);
+    transform: scale(1.05);
+}
+
+/* Palitan ang dating .footer-links pababa hanggang bago mag .footer-bottom ng code na ito: */
+
+.connect-section {
+    text-align: center;
+    z-index: 2; /* Para laging nasa ibabaw ng watermark logo */
+    margin-top: 10px;
+}
+
+.connect-section p {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    color: var(--text-main);
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.social-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid var(--accent) !important; /* Pinilit nating maging Asul */
+    color: var(--text-main);
+    font-size: 1.6rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background-color: transparent;
+}
+
+.social-icons a:hover {
+    background-color: var(--accent) !important;
+    color: var(--bg-color) !important; 
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8) !important; /* Asul na glow */
+    transform: translateY(-5px);
+}
+
+.footer-divider {
+    color: var(--secondary);
+    font-family: var(--font-tech);
+    font-weight: bold;
+}
+
+.footer-bottom {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(226, 232, 240, 0.05);
+}
+
+.copyright {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: #64748B; /* Muted Slate gray */
+}
+
+/* Smooth Back To Top Button */
+.back-to-top {
+    font-family: var(--font-tech);
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.back-to-top:hover {
+    text-shadow: 0 0 15px var(--accent);
+    transform: translateY(-5px); /* Aangat pag tinutok ang mouse */
+}
+/* Container to detect the hover state */
+.about-trigger-container {
+    display: inline-block;
+}
+
+/* Base styles for ALL pop-ups */
+.side-popup {
+    position: fixed; 
+    background-color: rgba(20, 20, 20, 0.95); 
+    color: #e0e0e0;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    border: 1px solid #444;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); 
+    z-index: 9999; 
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Specific Sizes */
+.left-popup, .right-popup { width: 350px; }
+.top-popup, .bottom-popup { width: 450px; /* Slightly wider for top/bottom */ }
+
+/* Typography inside the pop-ups */
+.side-popup h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    border-bottom: 1px solid #555;
+    padding-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.side-popup h4 {
+    color: #fff;
+    margin: 20px 0 10px 0;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.intro-text, .goal-text { font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; }
+
+/* Lists and Tags */
+.detail-list { list-style-type: none; padding: 0; margin: 0; }
+.detail-list li { font-size: 0.9rem; margin-bottom: 12px; line-height: 1.4; }
+.detail-list strong { color: #fff; }
+
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-tags span {
+    background-color: #333;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: 'Space Mono', monospace;
+    border: 1px solid #555;
+}
+
+/* --- POSITIONING AND ANIMATION LOGIC --- */
+
+/* Left & Right: Center Vertically */
+.left-popup, .right-popup {
+    top: 50%;
+    transform: translateY(-50%);
+}
+.left-popup { left: -450px; }
+.right-popup { right: -450px; }
+
+/* Top & Bottom: Center Horizontally */
+.top-popup, .bottom-popup {
+    left: 50%;
+    transform: translateX(-50%);
+}
+.top-popup { top: -450px; }
+.bottom-popup { bottom: -450px; }
+
+/* --- THE HOVER TRIGGERS --- */
+.about-trigger-container:hover .left-popup { left: 40px; opacity: 1; visibility: visible; }
+.about-trigger-container:hover .right-popup { right: 40px; opacity: 1; visibility: visible; }
+.about-trigger-container:hover .top-popup { top: 40px; opacity: 1; visibility: visible; }
+.about-trigger-container:hover .bottom-popup { bottom: 40px; opacity: 1; visibility: visible; }
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+
+    nav ul {
+        gap: 15px;
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem; 
+    }
+    
+    .hover-profile-pic {
+        display: none;
+    }
+
+    .about-section, .skills-section, footer {
+        padding: 80px 20px; 
+    }
+
+    .skills-grid {
+        gap: 15px;
+    }
+
+    .skill-item {
+        width: 100%; 
+        box-sizing: border-box;
+    }
+
+    .project-card {
+        width: 280px; 
+        height: 180px;
+    }
+    /* Idagdag ito sa loob ng @media (max-width: 768px) sa dulo ng iyong CSS */
+    .footer-bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .footer-divider {
+        display: none; /* Itatago ang "//" sa mobile para mas malinis */
+    }
+}
